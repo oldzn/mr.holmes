@@ -11,7 +11,10 @@ Pedido do dono do projeto (14/10/2026): **toda** tarefa que toca interface — t
 1. **Antes de escrever o componente**, busque no registro do 21st os componentes e padrões já validados para aquela necessidade (ex.: "command palette", "search input with chips", "progress ring", "drawer settings", "toast"). Compare duas ou três opções.
 2. **Adapte, não cole.** O resultado tem que seguir a lógica e a estética deste projeto: paleta Baker Street (`--ink`, `--brass`, `--gold`, `--teal` em `app/globals.css`), tipografia Cormorant/Inter/JetBrains, textos em pt-BR, e os comportamentos já definidos (atalhos de teclado, feedback por toast, `prefers-reduced-motion`).
 3. **Diga de onde veio.** Ao terminar, cite qual componente do 21st serviu de referência e o que foi mudado.
-4. **Se o MCP não estiver conectado** na sessão, avise logo no início — não invente que consultou. Para conectar: claude.ai → Configurações → Conectores → *Add custom connector* → nome `21st`, URL `https://21st.dev/api/mcp`, entrar com OAuth; depois abrir uma sessão nova. No Claude Code local: `/mcp` e autenticar o servidor `21st`.
+4. **Se o MCP não estiver conectado** na sessão, avise logo no início — não invente que consultou. Como conectar:
+   - **Claude Code local:** exporte a chave antes de abrir o Claude Code — `export TWENTYFIRST_API_KEY=21st_sk_...` — e o `.mcp.json` do projeto usa ela. Confira com `claude mcp list`. Alternativa: `/plugin marketplace add 21st-dev/claude-code-plugin` e `/plugin install 21st@21st`.
+   - **claude.ai / sessões na nuvem:** Configurações → Conectores → *Add custom connector* → nome `21st`, URL `https://21st.dev/api/mcp`, entrar com OAuth; depois abrir uma sessão nova. A rede do ambiente também precisa liberar `21st.dev`.
+   - **Nunca** grave a chave `21st_sk_…` em arquivo do repositório: ele é público.
 
 ## Armadilhas já encontradas (não repetir)
 

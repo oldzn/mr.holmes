@@ -37,6 +37,15 @@ Produção: `npm run build && npm start`.
 
 `/` busca · `↵` investigar · `Esc` interromper/fechar · `N` novo caso · `1` `2` `3` filtros · `F` filtrar · `[` `]` suspeitos · `C` copiar links · `O` abrir todos · `E` exportar · `H` casos · `S` ajustes · `M` som · `G` girar o globo · `?` lista de atalhos
 
+## Desenvolvimento com o 21st.dev
+
+O `.mcp.json` registra o servidor MCP do [21st.dev](https://21st.dev) (componentes de UI validados) e lê a chave da variável `TWENTYFIRST_API_KEY` — a chave nunca entra no repositório:
+
+```bash
+export TWENTYFIRST_API_KEY=21st_sk_...   # sua chave do 21st.dev
+claude                                    # o servidor 21st aparece em `claude mcp list`
+```
+
 ## Notas
 
 - Cada suspeito é um request separado a `/api/search` (`maxDuration = 300`), então uma lista longa nunca estoura o tempo de uma função na Vercel.
