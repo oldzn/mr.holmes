@@ -27,7 +27,7 @@ export function exportFindings(kind: "json" | "csv" | "txt", findings: Finding[]
     const esc = (v: unknown) => `"${String(v ?? "").replaceAll('"', '""')}"`;
     const rows = [["usuario", "site", "url", "resultado", "ms", "detalhe"].join(",")];
     for (const f of findings) rows.push([f.username, f.site, f.url, verdictLabel[f.status], f.ms ?? "", f.context ?? ""].map(esc).join(","));
-    download(`${base}.csv`, "﻿" + rows.join("\n"), "text/csv;charset=utf-8");
+    download(`${base}.csv`, "\uFEFF" + rows.join("\n"), "text/csv;charset=utf-8");
   } else {
     const found = findings.filter((f) => f.status === "claimed");
     const lines = usernames.flatMap((u) => {
