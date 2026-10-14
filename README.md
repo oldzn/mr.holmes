@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mr. Holmes — Localizador
 
-## Getting Started
+Interface visual e interativa para localizar um nome de usuário em **~400 redes sociais ao mesmo tempo**, com resultados chegando ao vivo, cena 3D (globo holográfico, lupa de latão, pinos dourados por perfil encontrado) e estética vitoriana-futurista.
 
-First, run the development server:
+O motor de detecção é um **port em TypeScript do [Sherlock Project](https://github.com/sherlock-project/sherlock)** (MIT): mesma base de sites (`data.json`) e as mesmas três regras de verificação — código HTTP, mensagem de erro na página e redirecionamento.
+
+> Use com responsabilidade: para verificar a sua própria pegada digital, escolher um nome de usuário livre, ou em investigações autorizadas.
+
+## Rodar localmente
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Produção: `npm run build && npm start`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## O que existe
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Área | Onde |
+|---|---|
+| Página e orquestração | `components/holmes-app.tsx` |
+| Cena 3D (Three.js + bloom) | `components/scene/holmes-scene.ts` |
+| Busca ao vivo (SSE, um stream por suspeito) | `app/api/search/route.ts`, `lib/client/use-investigation.ts` |
+| Motor (port do Sherlock) | `lib/sherlock/engine.ts` |
+| Base de sites (ao vivo do GitHub, com cópia embutida de reserva) | `lib/sherlock/sites.ts`, `lib/sherlock/data.json` |
+| Ajustes, casos arquivados, atalhos | `components/overlays.tsx`, `lib/client/storage.ts` |
 
-## Learn More
+- **Vários suspeitos** por caso (até 10), e `{?}` testa variações (`joao{?}silva` → `joao_silva`, `joao-silva`, `joao.silva`).
+- **Filtros** Encontrados / Todos / Inconclusivos, busca por rede, ordenação.
+- **Exportar** dossiê `.json`, planilha `.csv` ou só os links `.txt`; copiar/abrir todos os links.
+- **Casos arquivados** no navegador (caso nº começa em 1887, o ano de *Um Estudo em Vermelho*).
+- **Modo simulação** (Ajustes): resultados inventados, sem consultar rede — útil para conhecer a interface.
+- **Som** discreto a cada perfil encontrado e acorde ao fechar o caso; **movimento reduzido** respeitado.
 
-To learn more about Next.js, take a look at the following resources:
+## Atalhos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`/` busca · `↵` investigar · `Esc` interromper/fechar · `N` novo caso · `1` `2` `3` filtros · `F` filtrar · `[` `]` suspeitos · `C` copiar links · `O` abrir todos · `E` exportar · `H` casos · `S` ajustes · `M` som · `G` girar o globo · `?` lista de atalhos
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notas
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Cada suspeito é um request separado a `/api/search` (`maxDuration = 300`), então uma lista longa nunca estoura o tempo de uma função na Vercel.
+- Alguns sites bloqueiam IPs de datacenter; esses aparecem como **Inconclusivo** em vez de virar falso positivo.
+- Variáveis de ambiente: nenhuma.
